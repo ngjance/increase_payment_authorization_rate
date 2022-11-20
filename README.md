@@ -19,8 +19,7 @@ In order to do so, we would first have to understand what causes declined transa
 
 * There are 232 empty cells under 'issuercountrycode' and they are imputed with 'NA'.
 * 'creationdate' date is split into 'year', 'month', 'date', 'day' and 'hour' for our analysis purpose.
-* It was later discovered that there is only one year, '2017' and one month 'October'.
-
+* It was later discovered that there is only one year, '2017' and one month 'October'.<br>
 Hence the year and month columns are dropped
 * The dataset is then split into train set and test set to prevent overspill
 * All the analysis are done on the train set
@@ -143,7 +142,7 @@ It is noted that the is a small percentage of such incidents, however, it is not
 
 #### Payment Method of Declined Transactions
 Premium Credit and Standard Credit make up almost half (46.74%) of the payment type for approved transactions.
-The most common payment method for declined transactions is Standard Debit.
+The most common payment method for declined transactions is Standard Debit.<br>
 Standard Debit is the third most common payment method for approved transactions making up to 17.41% of total approved transactions.
 Therefore it is worth taking a look at the Standard Debit payment type to see what factors affects the approval/declined rates.
 
@@ -242,6 +241,7 @@ Merchants should schedule payments on these days and timings.
 Through the earlier analysis, the features that seem to impact the authorization rate are:
 * payment method
 * 3D attempt
+* amount
 * calendar day
 * hour
 * day of week
@@ -249,47 +249,54 @@ Through the earlier analysis, the features that seem to impact the authorization
 We will build a simple logistic regression model using the above 5 features.
 
 #### Accuracy Score
-Train Set Accuracy: 0.8825
-Test Set Accuracy: 0.8815
+Train Set Accuracy: 0.8824<br>
+Test Set Accuracy: 0.8814
 
 The logistic regression model confirms with a 88% acurracy rate that our earlier analysis that 'payment method', '3D attempt', 'calendar day', 'hour' and 'day of the week' are important factors that influence the acceptance rate.
 
 
 #### RSME
-Training RMSE: 0.6079 
-Testing RMSE: 0.6032
+Training RMSE: 0.6082 <br>
+Testing RMSE: 0.6037
 
 
 #### Coefficient
 **Approved Transactions**
 |    feature    	|    coef   	| absolute coef 	|
 |:-------------:	|:---------:	|:-------------:	|
-| threedattempt 	| -0.223031 	|    0.223031   	|
-|      hour     	|  0.114404 	|    0.114404   	|
-|  day_of_week  	| -0.082079 	|    0.082079   	|
-| paymentmethod 	|  0.018490 	|    0.018490   	|
-|      day      	| -0.002655 	|    0.002655   	|
-
-**Declined Transactions**
-|    feature    	|    coef   	| absolute coef 	|
-|:-------------:	|:---------:	|:-------------:	|
-|  day_of_week  	| -0.101512 	|    0.101512   	|
-| threedattempt 	|  0.081013 	|    0.081013   	|
-|      day      	|  0.079630 	|    0.079630   	|
-|      hour     	|  0.069878 	|    0.069878   	|
-| paymentmethod 	| -0.024642 	|    0.024642   	|
+|     amount    	|  0.696473 	|    0.696473   	|
+| threedattempt 	| -0.194877 	|    0.194877   	|
+|      hour     	|  0.118909 	|    0.118909   	|
+|  day_of_week  	| -0.096571 	|    0.096571   	|
+| paymentmethod 	|  0.012878 	|    0.012878   	|
+|      day      	| -0.010195 	|    0.010195   	|
 
 **Fraud Transactions**
 |    feature    	|    coef   	| absolute coef 	|
 |:-------------:	|:---------:	|:-------------:	|
-| threedattempt 	| -4.512095 	|    4.512095   	|
-|  day_of_week  	| -0.090827 	|    0.090827   	|
-| paymentmethod 	|  0.048357 	|    0.048357   	|
-|      day      	|  0.030375 	|    0.030375   	|
-|      hour     	|  0.012525 	|    0.012525   	|
+| threedattempt 	| -4.808873 	|    4.808873   	|
+|  day_of_week  	| -0.089575 	|    0.089575   	|
+| paymentmethod 	|  0.070181 	|    0.070181   	|
+|     amount    	|  0.022404 	|    0.022404   	|
+|      hour     	|  0.022086 	|    0.022086   	|
+|      day      	|  0.021720 	|    0.021720   	|
 
-The most important factor for fraud transactions is 3D attempt followed by day of the week.
-The most important factor for declined transactions is day of the week followed by 3D attempt.
+'3D attempt' has the highest absolute coefficient of 4.81.
+Hence, it is important for merchants to implement 3DS2 authentication to help prevent fraud.
+
+**Declined Transactions**
+|    feature    	|    coef   	| absolute coef 	|
+|:-------------:	|:---------:	|:-------------:	|
+|     amount    	|  0.947852 	|    0.947852   	|
+| threedattempt 	|  0.224769 	|    0.224769   	|
+|  day_of_week  	| -0.122675 	|    0.122675   	|
+|      hour     	|  0.073842 	|    0.073842   	|
+|      day      	|  0.069388 	|    0.069388   	|
+| paymentmethod 	| -0.030834 	|    0.030834   	|
+
+The most important factor for declined transactions is amount followed by 3D attempt.
+By having 3DS authentication for transaction over a certain amount would help reduce the declined rate.
+
 
 **Note:**
 This is a base model and has more room for improvement, where we can tune the model to increase accuracy rate.
@@ -299,4 +306,5 @@ This is a base model and has more room for improvement, where we can tune the mo
 ### Conclusion
 
 In conclusion, in order to increase the authorization rate, it is highly recommended that the merchants implement either 3DS or 3DS2 authentication. increase authorization rate.
+
 In addition, merchants should avoid scheduling payments on certain calendar day, day of the week and hour to reduce declined rates.# increase_payment_authorization_rate
