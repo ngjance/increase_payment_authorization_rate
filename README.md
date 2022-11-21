@@ -19,8 +19,7 @@ In order to do so, we would first have to understand what causes declined transa
 
 * There are 232 empty cells under 'issuercountrycode' and they are imputed with 'NA'.
 * 'creationdate' date is split into 'year', 'month', 'date', 'day' and 'hour' for our analysis purpose.
-* It was later discovered that there is only one year, '2017' and one month 'October'.
-
+* It was later discovered that there is only one year, '2017' and one month 'October'.<br>
 Hence the year and month columns are dropped
 * The dataset is then split into train set and test set to prevent overspill
 * All the analysis are done on the train set
@@ -250,14 +249,14 @@ Through the earlier analysis, the features that seem to impact the authorization
 We will build a simple logistic regression model using the above 5 features.
 
 #### Accuracy Score
-Train Set Accuracy: 0.8824
+Train Set Accuracy: 0.8824<br>
 Test Set Accuracy: 0.8814
 
 The logistic regression model confirms with a 88% acurracy rate that our earlier analysis that 'payment method', '3D attempt', 'calendar day', 'hour' and 'day of the week' are important factors that influence the acceptance rate.
 
 
 #### RSME
-Training RMSE: 0.6082 
+Training RMSE: 0.6082<br> 
 Testing RMSE: 0.6037
 
 
@@ -306,5 +305,5 @@ This is a base model and has more room for improvement, where we can tune the mo
 
 ### Conclusion
 
-In conclusion, in order to increase the authorization rate, it is highly recommended that the merchants implement either 3DS or 3DS2 authentication. increase authorization rate.
+In conclusion, in order to increase the authorization rate, it is highly recommended that the merchants implement either 3DS or 3DS2 authentication. increase authorization rate.<br>
 In addition, merchants should avoid scheduling payments on certain calendar day, day of the week and hour to reduce declined rates.# increase_payment_authorization_rate
